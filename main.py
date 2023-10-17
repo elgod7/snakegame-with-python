@@ -40,9 +40,21 @@ def main():
     # Define the food
     food = Food(SCREEN_WIDTH, SCREEN_HEIGHT, random)
 
+    clock = pygame.time.Clock()
+    
+    # Create surfaces for drawing the snake and food
+    snake_surface = pygame.Surface((10, 10))
+    snake_surface.fill(GREEN)  # Snake color
+
+    food_surface = pygame.Surface((10, 10))
+    food_surface.fill(RED)  # Food color
+
+    # Create a surface for the score display
+    font = pygame.font.Font(None, 36)
+
     game_over = False
 
-    clock = pygame.time.Clock()
+   
 
     while not game_over:
         for event in pygame.event.get():
@@ -80,11 +92,14 @@ def main():
 
             # Draw the snake and food on the screen
             screen.fill((0, 0, 0))  # Clear the screen
-            snake.draw(screen,pygame)
-            food.draw(screen,pygame)
+            screen.blit(snake_surface, (snake.head[0], snake.head[1]))
+            for segment in snake.body[1:]:
+                screen.blit(snake_surface, (segment[0], segment[1]))
+
+            screen.blit(food_surface, (food.position[0], food.position[1]))
+
 
             # Display the score on the screen (you can customize the position and font)
-            font = pygame.font.Font(None, 36)
             score_text = font.render(f"Score: {snake.score}", True, WHITE)
             screen.blit(score_text, (10, 10))
 
