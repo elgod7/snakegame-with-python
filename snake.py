@@ -43,12 +43,16 @@ class Snake:
         # You can also add more sophisticated logic for growing if needed.
 
     def draw(self, screen, pygame):
-         # Draw the head of the snake
-        pygame.draw.rect(screen, self.color, pygame.Rect(self.head[0], self.head[1], 10, 10))
+        # Create a surface for the head
+        head_surface = pygame.Surface((10, 10))
+        head_surface.fill((0, 255, 0))  # Snake color
+        screen.blit(head_surface, (self.head[0], self.head[1]))
 
-        # Draw the body segments
-        for segment in self.body:
-            pygame.draw.rect(screen, self.color, pygame.Rect(segment[0], segment[1], 10, 10))
+        # Create a surface for the body segments
+        body_surface = pygame.Surface((10, 10))
+        body_surface.fill((0, 255, 0))  # Snake color
+        for segment in self.body[1:]:
+            screen.blit(body_surface, (segment[0], segment[1]))
 
     def check_collision(self):
         # Check collision with walls
