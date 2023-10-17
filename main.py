@@ -83,7 +83,7 @@ def main():
 
             # Display the score on the screen (you can customize the position and font)
             font = pygame.font.Font(None, 36)
-            score_text = font.render(f"Score: {snake.score}", True, (255, 255, 255))
+            score_text = font.render(f"Score: {snake.score}", True, WHITE)
             screen.blit(score_text, (10, 10))
 
             # Check game-over conditions
@@ -96,7 +96,7 @@ def main():
     # Game over logic
     font = pygame.font.Font(None, 72)
     game_over_text = font.render("Game Over", True, (255, 0, 0))
-    score_text = font.render(f"Final Score: {snake.score}", True, (255, 255, 255))
+    score_text = font.render(f"Final Score: {snake.score}", True, WHITE)
 
     screen.blit(game_over_text, (SCREEN_WIDTH// 2 - 150, SCREEN_HEIGHT // 2 - 50))
     screen.blit(score_text, (SCREEN_WIDTH // 2 - 180, SCREEN_HEIGHT // 2 + 50))
