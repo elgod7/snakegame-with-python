@@ -4,7 +4,7 @@
 #7.Implement collision detection logic for the snake hitting walls, itself, or the food.👍
 #8.Keep track of the player's score (length of the snake).
 #9.Implement game-over conditions and display the final score.
-#10.Place food randomly on the screen when it is eaten by the snake.
+#10.Place food randomly on the screen when it is eaten by the snake.👍
 #11.Optimize the code for better performance.
 #12.Add comments and document your code for better understanding
 
