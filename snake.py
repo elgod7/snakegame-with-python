@@ -45,12 +45,12 @@ class Snake:
     def draw(self, screen, pygame):
         # Create a surface for the head
         head_surface = pygame.Surface((10, 10))
-        head_surface.fill((0, 255, 0))  # Snake color
+        head_surface.fill(self.color)  # Snake color
         screen.blit(head_surface, (self.head[0], self.head[1]))
 
         # Create a surface for the body segments
         body_surface = pygame.Surface((10, 10))
-        body_surface.fill((0, 255, 0))  # Snake color
+        body_surface.fill(self.color)  # Snake color
         for segment in self.body[1:]:
             screen.blit(body_surface, (segment[0], segment[1]))
 
