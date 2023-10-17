@@ -92,7 +92,7 @@ def main():
 
             pygame.display.flip()
             pygame.time.Clock().tick(6)  # Control the frame rate
-            
+
     # Game over logic
     font = pygame.font.Font(None, 72)
     game_over_text = font.render("Game Over", True, (255, 0, 0))
@@ -109,4 +109,5 @@ def main():
     pygame.quit()
     sys.exit()
 
-main()
+if __name__ == "__main__":
+    main()
