@@ -18,24 +18,23 @@ from snake import Snake
 from food import Food
 
 
-#2.Initialize Pygame and set up the game window.👍
-pygame.init()
-
-#Define Constant for Screen 
-SCREEN_WIDTH, SCREEN_HEIGHT = 600, 400
-screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
-pygame.display.set_caption("Snake Game")
-
-#Define Constant for Color
-BLACK = pygame.Color(0,0,0)
-WHITE = pygame.Color(255,255,255)
-RED = pygame.Color(255,0,0)
-GREEN = pygame.Color(0,255,0)
-BLUE = pygame.Color(0,0,255)
-
 #5.Implement the main game loop.
 
 def main():
+    #2.Initialize Pygame and set up the game window.👍
+    pygame.init()
+
+    #Define Constant for Screen 
+    SCREEN_WIDTH, SCREEN_HEIGHT = 600, 400
+    screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
+    pygame.display.set_caption("Snake Game")
+
+    #Define Constant for Color
+    BLACK = pygame.Color(0,0,0)
+    WHITE = pygame.Color(255,255,255)
+    RED = pygame.Color(255,0,0)
+    GREEN = pygame.Color(0,255,0)
+    
     #Define the snake
     snake = Snake(SCREEN_WIDTH, SCREEN_HEIGHT, GREEN)
     # Define the food
@@ -93,6 +92,7 @@ def main():
 
             pygame.display.flip()
             pygame.time.Clock().tick(6)  # Control the frame rate
+            
     # Game over logic
     font = pygame.font.Font(None, 72)
     game_over_text = font.render("Game Over", True, (255, 0, 0))
