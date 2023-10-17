@@ -42,6 +42,8 @@ def main():
 
     game_over = False
 
+    clock = pygame.time.Clock()
+
     while not game_over:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -91,7 +93,7 @@ def main():
                 game_over = True
 
             pygame.display.flip()
-            pygame.time.Clock().tick(6)  # Control the frame rate
+            clock.tick(6)  # Control the frame rate
 
     # Game over logic
     font = pygame.font.Font(None, 72)
