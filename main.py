@@ -38,7 +38,7 @@ def main():
     #Define the snake
     snake = Snake(SCREEN_WIDTH, SCREEN_HEIGHT, GREEN)
     # Define the food
-    food = Food(SCREEN_WIDTH, SCREEN_HEIGHT, random)
+    food = Food(SCREEN_WIDTH, SCREEN_HEIGHT)
 
     clock = pygame.time.Clock()
     

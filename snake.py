@@ -1,4 +1,7 @@
 #3.Create a Snake class to manage the snake's attributes and behavior.
+
+import pygame
+import os
 class Snake:
     def __init__(self,screen_width, screen_height, snake_color):
         # Initialize snake attributes (position, size, etc.)
@@ -9,6 +12,26 @@ class Snake:
         self.screen_height = screen_height
         self.score = 0  # Initialize score to 0
         self.color = snake_color  
+
+       # Load snake graphics
+        self.head_up = pygame.image.load(os.path.join("graphics", "head_up.png"))
+        self.head_down = pygame.image.load(os.path.join("graphics", "head_down.png"))
+        self.head_left = pygame.image.load(os.path.join("graphics", "head_left.png"))
+        self.head_right = pygame.image.load(os.path.join("graphics", "head_right.png"))
+
+        self.tail_up = pygame.image.load(os.path.join("graphics", "tail_up.png"))
+        self.tail_down = pygame.image.load(os.path.join("graphics", "tail_down.png"))
+        self.tail_left = pygame.image.load(os.path.join("graphics", "tail_left.png"))
+        self.tail_right = pygame.image.load(os.path.join("graphics", "tail_right.png"))
+
+        self.body_horizontal = pygame.image.load(os.path.join("graphics", "body_horizontal.png"))
+        self.body_vertical = pygame.image.load(os.path.join("graphics", "body_vertical.png"))
+        self.body_topleft = pygame.image.load(os.path.join("graphics", "body_topleft.png"))
+        self.body_topright = pygame.image.load(os.path.join("graphics", "body_topright.png"))
+        self.body_bottomleft = pygame.image.load(os.path.join("graphics", "body_bottomleft.png"))
+        self.body_bottomright = pygame.image.load(os.path.join("graphics", "body_bottomright.png"))
+
+
 
         # Initial position of the snake (you can choose any starting position)
         self.head = [100, 50]
@@ -42,7 +65,7 @@ class Snake:
 
         # You can also add more sophisticated logic for growing if needed.
 
-    def draw(self, screen, pygame):
+    def draw(self, screen):
         # Create a surface for the head
         head_surface = pygame.Surface((10, 10))
         head_surface.fill(self.color)  # Snake color
