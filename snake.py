@@ -31,11 +31,17 @@ class Snake:
         self.body_bottomleft = pygame.image.load(os.path.join("graphics", "body_bottomleft.png"))
         self.body_bottomright = pygame.image.load(os.path.join("graphics", "body_bottomright.png"))
 
-
-
         # Initial position of the snake (you can choose any starting position)
-        self.head = [100, 50]
-        self.body = [[100, 50]]  # Initial body segments
+        # self.head = [100, 50]
+        # self.body = [[100, 50]]  # Initial body segments
+
+        # Set initial position for the snake head
+        self.head_image = self.head_right
+        self.head_rect = self.head_image.get_rect()
+        self.head_rect.topleft = (100, 100)
+
+        # List to store body segments
+        self.body = [self.head_rect]
 
 
     def move(self):
