@@ -43,15 +43,6 @@ class Snake:
         self.body_bottomright = pygame.image.load(os.path.join("graphics", "body_bottomright.png")).convert_alpha()
         self.body_br = pygame.transform.scale(self.body_bottomright,self.scale)
 
-
-        # Set initial position for the snake head
-        self.head_image = self.head_right
-        self.head_rect = self.head_image.get_rect()
-        self.head_rect.topleft = (100, 100)
-
-        # List to store body segments
-        #self.body = [self.head_rect]
-
         self.body = [Vector2(5,10),Vector2(4,10),Vector2(3,10)]
 
         self.direction = Vector2(1,0) # right
@@ -67,26 +58,7 @@ class Snake:
             body_copy = self.body[:-1]
             body_copy.insert(0,body_copy[0] + self.direction)
             self.body = body_copy[:]
-        # # Move the snake based on the current direction
-        # if self.direction == pygame.K_UP:
-        #     self.head_rect = self.head_rect.move(0, -30)
-        #     self.head_image = self.head_up
-        # elif self.direction == pygame.K_DOWN:
-        #     self.head_rect = self.head_rect.move(0, 30)
-        #     self.head_image = self.head_down
-        # elif self.direction == pygame.K_LEFT:
-        #     self.head_rect = self.head_rect.move(-30, 0)
-        #     self.head_image = self.head_left
-        # elif self.direction == pygame.K_RIGHT:
-        #     self.head_rect = self.head_rect.move(30, 0)
-        #     self.head_image = self.head_right
-
-        # # Move the rest of the body
-        # self.body.insert(0, self.head_rect)
-
-        # # Remove the last segment if not growing
-        # if len(self.body) > self.score + 1:
-        #     self.body.pop()
+        
 
     def grow(self):
         # Increase the size of the snake
@@ -149,14 +121,6 @@ class Snake:
                 elif next_block.x== 1 and previous_block.y==1 or next_block.y== 1 and previous_block.x==1:
                     screen.blit(self.body_br,block_rect)
                 
-            # else:
-            #     pygame.draw.rect(screen,(0,114,25),block_rect)
-        # screen.blit(self.head_image, self.head_rect)
-
-        # for i in range(1,len(self.body)):
-        #     segment = self.body[i]
-        #     orientation = self.get_body_orientation(segment,self.body[i-1])
-        #     screen.blit(orientation,segment)
 
     def update_head_graphics(self):
         head_rel = self.body[1] -self.body[0]
