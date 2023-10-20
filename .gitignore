@@ -160,3 +160,4 @@ cython_debug/
 #.idea/
 
 snake_game_profile
+test.py

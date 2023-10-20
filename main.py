@@ -1,130 +1,103 @@
-#TODO
+# main.py
 
-
-#7.Implement collision detection logic for the snake hitting walls, itself, or the food.👍
-#8.Keep track of the player's score (length of the snake).
-#9.Implement game-over conditions and display the final score.
-#10.Place food randomly on the screen when it is eaten by the snake.👍
-#11.Optimize the code for better performance.
-#12.Add comments and document your code for better understanding
-
-#1.Import the necessary libraries (pygame and others if needed).👍
 import pygame
 import sys
-import random
-
-#Import snake and food classes
 from snake import Snake
 from food import Food
+from constants import cell_size,cell_number
+from pygame.math import Vector2
 
+class Game:
+    def __init__(self):
+        self.snake = Snake()
+        self.food = Food()
+    
+    def update(self):
+        self.snake.move()
+        self.check_collision()
+        self.check_fail()
 
-#5.Implement the main game loop.
+    def draw_element(self,screen):
+        self.food.draw(screen)
+        self.snake.draw(screen)
+
+    def check_collision(self):
+        if self.food.pos == self.snake.body[0]:
+            self.food.spawn_food()
+            self.snake.grow()
+
+    def check_fail(self):
+        if not 0 <= self.snake.body[0].x < cell_number or not 0 <= self.snake.body[0].y < cell_number:
+            self.game_over()
+
+        for block in self.snake.body[1:]:
+            if block == self.snake.body[0]:
+                self.game_over()
+
+    def game_over(self):
+          # Game over logic
+        font = pygame.font.Font(None, 72)
+        game_over_text = font.render("Game Over", True, (255, 0, 0))
+        score_text = font.render(f"Final Score: {self.snake.score}", True, (255, 255, 255))
+
+        screen.blit(game_over_text, (screen_width // 2 - 150, screen_height // 2 - 50))
+        screen.blit(score_text, (screen_width // 2 - 180, screen_height // 2 + 50))
+
+        pygame.display.flip()
+
+        # Wait for a moment before exiting (you can adjust the time)
+        pygame.time.delay(3000)
+
+        pygame.quit()
+        sys.exit()
+
+# Set up the screen
+screen_width = cell_number * cell_size
+screen_height = cell_number * cell_size
+pygame.init()
+screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption("Snake Game")
 
 def main():
-    #2.Initialize Pygame and set up the game window.👍
-    pygame.init()
-
-    #Define Constant for Screen 
-    SCREEN_WIDTH, SCREEN_HEIGHT = 600, 400
-    screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
-    pygame.display.set_caption("Snake Game")
-
-    #Define Constant for Color
-    BLACK = pygame.Color(0,0,0)
-    WHITE = pygame.Color(255,255,255)
-    RED = pygame.Color(255,0,0)
-    GREEN = pygame.Color(0,255,0)
     
-    #Define the snake
-    snake = Snake(SCREEN_WIDTH, SCREEN_HEIGHT, GREEN)
-    # Define the food
-    food = Food(SCREEN_WIDTH, SCREEN_HEIGHT)
+    # Load background image
+    background = pygame.image.load("graphics/background.jpeg")
+    background = pygame.transform.scale(background, (screen_width, screen_height))
 
     clock = pygame.time.Clock()
-    
-    # Create surfaces for drawing the snake and food
-    snake_surface = pygame.Surface((10, 10))
-    snake_surface.fill(GREEN)  # Snake color
 
-    food_surface = pygame.Surface((10, 10))
-    food_surface.fill(RED)  # Food color
+    SCREEN_UPDATE = pygame.USEREVENT
+    pygame.time.set_timer(SCREEN_UPDATE,150)
 
-    # Create a surface for the score display
-    font = pygame.font.Font(None, 36)
+    main_game = Game()
 
     game_over = False
-
-   
 
     while not game_over:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-        #6.Handle user input to control the snake.
+            if event.type == SCREEN_UPDATE:
+                main_game.update()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
-                # Change snake direction
-                    if snake.direction != "DOWN":
-                        snake.direction = "UP"
-                if event.key == pygame.K_DOWN:
-                # Change snake direction
-                    if snake.direction != "UP":
-                        snake.direction = "DOWN"
-                if event.key == pygame.K_LEFT:
-                # Change snake direction
-                    if snake.direction != "RIGHT":
-                        snake.direction = "LEFT"
-                if event.key == pygame.K_RIGHT:
-                # Change snake direction
-                    if snake.direction != "LEFT":
-                        snake.direction = "RIGHT"
+                if event.key == pygame.K_UP and main_game.snake.direction != (0,1):
+                    main_game.snake.direction = Vector2(0,-1)
+                if event.key == pygame.K_DOWN and main_game.snake.direction != (0,-1):
+                    main_game.snake.direction = Vector2(0,1)
+                if event.key == pygame.K_LEFT and main_game.snake.direction != (1,0):
+                    main_game.snake.direction = Vector2(-1,0)
+                if event.key == pygame.K_RIGHT and main_game.snake.direction != (-1,0):
+                    main_game.snake.direction = Vector2(1,0)
+
         if not game_over:
-            # Handle user input and update game state
-            # Update game logic (snake movement, collisions, etc.)
-            snake.move()
-            snake.check_collision()
 
-            # Check if the snake has eaten the food
-            if snake.head == food.position:
-                snake.grow()
-                food.spawn_food()
-
-            # Draw the snake and food on the screen
-            screen.fill((0, 0, 0))  # Clear the screen
-            screen.blit(snake_surface, (snake.head[0], snake.head[1]))
-            for segment in snake.body[1:]:
-                screen.blit(snake_surface, (segment[0], segment[1]))
-
-            screen.blit(food_surface, (food.position[0], food.position[1]))
-
-
-            # Display the score on the screen (you can customize the position and font)
-            score_text = font.render(f"Score: {snake.score}", True, WHITE)
-            screen.blit(score_text, (10, 10))
-
-            # Check game-over conditions
-            if snake.check_collision():
-                game_over = True
-
+            screen.fill((175,215,70))
+            main_game.draw_element(screen)
             pygame.display.flip()
-            clock.tick(6)  # Control the frame rate
 
-    # Game over logic
-    font = pygame.font.Font(None, 72)
-    game_over_text = font.render("Game Over", True, (255, 0, 0))
-    score_text = font.render(f"Final Score: {snake.score}", True, WHITE)
+        clock.tick(60)  # Control the frame rate
 
-    screen.blit(game_over_text, (SCREEN_WIDTH// 2 - 150, SCREEN_HEIGHT // 2 - 50))
-    screen.blit(score_text, (SCREEN_WIDTH // 2 - 180, SCREEN_HEIGHT // 2 + 50))
-
-    pygame.display.flip()
-
-    # Wait for a moment before exiting (you can adjust the time)
-    pygame.time.delay(3000)
-
-    pygame.quit()
-    sys.exit()
 
 if __name__ == "__main__":
     main()

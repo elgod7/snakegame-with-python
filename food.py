@@ -1,25 +1,34 @@
-#4.Create a Food class for the snake to eat.
-import random
-import pygame
-class Food:
-    def __init__(self, screen_width, screen_height):
-        self.position = [0, 0]
-        self.size = 10
-        self.screen_width = screen_width
-        self.screen_height = screen_height
-        self.color = (255, 0, 0)  # Red color for the food
-    
+# food.py
 
-        # Place the initial food on the screen
+import pygame
+import random
+import os
+import constants
+from pygame.math import Vector2
+
+class Food:
+    def __init__(self):
+        self.cell_size = constants.cell_size
+        self.cell_number = constants.cell_number
+
+        # Spawn the initial food position
         self.spawn_food()
+        self.scale = (self.cell_size,self.cell_size)
+
+        # Load food image
+        self.image = pygame.image.load(os.path.join("graphics", "apple.png")).convert_alpha()
+        self.image = pygame.transform.scale(self.image, self.scale)
 
     def spawn_food(self):
-        # Generate random coordinates for the food
-        x = random.randrange(0, self.screen_width - self.size, self.size)
-        y = random.randrange(0, self.screen_height - self.size, self.size)
+        # Generate a random position for the food
+        self.x = random.randint(0, self.cell_number-1)
+        self.y = random.randint(0, self.cell_number-1)
+        self.pos = Vector2(self.x,self.y)
 
-        self.position = [x, y]
-
-    def draw(self, screen):
+    def draw(self, screen): 
+        # Create a rect to represent the food's position
+        self.rect = pygame.Rect(self.pos.x * self.cell_size, self.pos.y*self.cell_size, self.cell_size, self.cell_size)
         # Draw the food on the screen
-        pygame.draw.rect(screen, self.color, pygame.Rect(self.position[0], self.position[1], self.size, self.size))
+        #pygame.draw.rect(screen,(25,0,0),self.rect)
+        screen.blit(self.image,self.rect.topleft)
+        
