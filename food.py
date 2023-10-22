@@ -22,12 +22,12 @@ class Food:
     def spawn_food(self):
         # Generate a random position for the food
         self.x = random.randint(0, self.cell_number-1)
-        self.y = random.randint(0, self.cell_number-1)
+        self.y = random.randint(1, self.cell_number-1)
         self.pos = Vector2(self.x,self.y)
 
     def draw(self, screen): 
         # Create a rect to represent the food's position
-        self.rect = pygame.Rect(self.pos.x * self.cell_size, self.pos.y*self.cell_size, self.cell_size, self.cell_size)
+        self.rect = pygame.Rect(self.pos.x * self.cell_size, self.pos.y *self.cell_size, self.cell_size, self.cell_size)
         # Draw the food on the screen
         #pygame.draw.rect(screen,(25,0,0),self.rect)
         screen.blit(self.image,self.rect.topleft)

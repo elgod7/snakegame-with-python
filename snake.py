@@ -65,22 +65,22 @@ class Snake:
         self.new_block = True
         self.score += 1
 
-    def check_collision(self):
-        # Check collision with walls
-        if (
-            self.head_rect.left < 0
-            or self.head_rect.right > self.screen_width
-            or self.head_rect.top < 0
-            or self.head_rect.bottom > self.screen_height
-        ):
-            return True  # Collision with walls
+    # def check_collision(self):
+    #     # Check collision with walls
+    #     if (
+    #         self.head_rect.left < 0
+    #         or self.head_rect.right > self.screen_width
+    #         or self.head_rect.top < 0
+    #         or self.head_rect.bottom > self.screen_height
+    #     ):
+    #         return True  # Collision with walls
 
-        # Check collision with itself
-        for segment in self.body[1:]:
-            if self.head_rect.colliderect(segment):
-                return True  # Collision with itself
+    #     # Check collision with itself
+    #     for segment in self.body[1:]:
+    #         if self.head_rect.colliderect(segment):
+    #             return True  # Collision with itself
 
-        return False  # No collision
+    #     return False  # No collision
 
     def get_body_orientation(self, current_segment, previous_segment):
         # Determine the orientation of the body segment

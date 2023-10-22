@@ -19,6 +19,7 @@ class Game:
 
     def draw_element(self,screen):
         self.draw_grass()
+        self.draw_score()
         self.food.draw(screen)
         self.snake.draw(screen)
 
@@ -28,7 +29,7 @@ class Game:
             self.snake.grow()
 
     def check_fail(self):
-        if not 0 <= self.snake.body[0].x < cell_number or not 0 <= self.snake.body[0].y < cell_number:
+        if not 0 <= self.snake.body[0].x < cell_number or not 1 <= self.snake.body[0].y < cell_number+1:
             self.game_over()
 
         for block in self.snake.body[1:]:
@@ -36,7 +37,7 @@ class Game:
                 self.game_over()
 
     def game_over(self):
-          # Game over logic
+        # Game over logic
         font = pygame.font.Font(None, 72)
         game_over_text = font.render("Game Over", True, (255, 0, 0))
         score_text = font.render(f"Final Score: {self.snake.score}", True, (255, 255, 255))
@@ -47,7 +48,7 @@ class Game:
         pygame.display.flip()
 
         # Wait for a moment before exiting (you can adjust the time)
-        pygame.time.delay(3000)
+        # pygame.time.delay(3000)
 
         pygame.quit()
         sys.exit()
@@ -66,10 +67,22 @@ class Game:
                     if col % 2 != 0:
                         grass_rect = pygame.Rect(col*cell_size,row*cell_size,cell_size,cell_size)
                         pygame.draw.rect(screen,grass_color,grass_rect)
+    def draw_score(self):
+        # Game Score logic
+        scoreboard = pygame.Surface((cell_size*cell_number ,cell_size))  # the size of your rect
+        scoreboard.set_alpha(128)                # alpha level
+        scoreboard.fill((0,0,0))
+        screen.blit(scoreboard,(0,0))           # this fills the entire surface 
+
+        font = pygame.font.Font(None, 24)
+        score_text = font.render(f"Score: {self.snake.score}", True, (255, 255, 255))
+        screen.blit(score_text,(screen_width//2 - 24, cell_size//2 - 10 ))
+
+
 
 # Set up the screen
-screen_width = cell_number * cell_size
-screen_height = cell_number * cell_size
+screen_width = cell_number * cell_size 
+screen_height = cell_number * cell_size + cell_size
 pygame.init()
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Snake Game")
