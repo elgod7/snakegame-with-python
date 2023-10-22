@@ -11,9 +11,22 @@ class Game:
     def __init__(self):
         self.snake = Snake()
         self.food = Food()
+
+        # Initialize fruit attributes
+        
+        self.fruit_toggle_interval = 5000  # Time in milliseconds (5 seconds)
+        self.fruit_toggle_timer = pygame.time.get_ticks() + self.fruit_toggle_interval
+        self.toggle = True
+
+        # Load and play background music
+        pygame.mixer.music.load("graphics/snake_music.mp3")
+        pygame.mixer.music.set_volume(0.5)  # Adjust the volume (0.0 to 1.0)
+        pygame.mixer.music.play(-1)  # Play the music indefinitely
+
     
     def update(self):
         self.snake.move()
+        self.toggle_fruit()
         self.check_collision()
         self.check_fail()
 
@@ -67,6 +80,7 @@ class Game:
                     if col % 2 != 0:
                         grass_rect = pygame.Rect(col*cell_size,row*cell_size,cell_size,cell_size)
                         pygame.draw.rect(screen,grass_color,grass_rect)
+
     def draw_score(self):
         # Game Score logic
         scoreboard = pygame.Surface((cell_size*cell_number ,cell_size))  # the size of your rect
@@ -77,6 +91,22 @@ class Game:
         font = pygame.font.Font(None, 24)
         score_text = font.render(f"Score: {self.snake.score}", True, (255, 255, 255))
         screen.blit(score_text,(screen_width//2 - 24, cell_size//2 - 10 ))
+
+    def toggle_fruit(self):
+     
+        now = pygame.time.get_ticks()
+
+        if now > self.fruit_toggle_timer:
+            
+            if not self.toggle:
+                self.food.food = self.food.image_off
+                self.toggle = True
+            else:
+                self.food.food = self.food.image
+                self.toggle = True
+
+            # Reset the timer for the next fruit toggle
+            self.fruit_toggle_timer = now + self.fruit_toggle_interval
 
 
 
